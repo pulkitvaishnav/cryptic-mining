@@ -1,0 +1,164 @@
+
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Crypta-Analysis</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="{% static 'css/landing-page.css' %}" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="{% static 'font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+    <style type="text/css">
+    	.jumbotron {
+			background: #358CCE;
+			color: #FFF;
+			border-radius: 0px;
+			}
+			.jumbotron-sm { padding-top: 24px;
+			padding-bottom: 24px; }
+			.jumbotron small {
+			color: #FFF;
+			}
+			.h1 small {
+			font-size: 24px;
+		}
+    </style>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+	    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
+        <div class="container topnav">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand topnav" href="#">Home</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#about">About</a>
+                    </li>
+                    <li>
+                        <a href="#services">Description</a>
+                    </li>
+                    <li>
+                        <a href="#contact">Contact-us</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav><br><br>
+
+    <div class="jumbotron jumbotron-sm">
+	    <div class="container">
+	        <div class="row">
+	            <div class="col-sm-12 col-lg-12">
+	                <h1 class="h1">
+	                    Fibonacci Series <small> Evaluation on increasing fibonacci number.</small></h1>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	<div class="container">
+	    <div class="row">
+	        <div class="col-md-6">
+	        	<form id="sparse_matrix_form" class="form ajax" method="post" enctype="multipart/form-data">
+	           		{% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="name"><h5>
+                                    Enter the fibonacci elements position</h5></label>
+                                <input type="input" name="input_" id="input_"/>
+                            </div>
+						    <div class="col-md-4">
+	                            <button type="submit" class="btn btn-primary pull-right" id="btnContactUs" onclick="showResult()">
+	                                Submit
+	                            </button>
+	                        </div>
+
+                    	</div>
+                </form>
+                <div class="col-md-6">
+                	<p id="fibo_number"></p>
+                	<p id="iterative_result_paragraph" ></p><br>
+                	<p id="recursive_result_paragraph"></p><br>
+                </div>
+	        </div>
+	    	<div class="col-md-6">
+	            <!-- <div class="well well-sm">
+
+	            </div> -->
+		        <h1>Some Line Charts loaded in Ajax!</h1>
+
+		        <canvas id="myChart" width="500" height="400"></canvas>
+
+		        <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+		        <script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
+		        <script type="text/javascript" src="{% static 'js/eldarion-ajax.min.js' %}"></script>
+		        <script type="text/javascript">
+		            $.get('{% url "line_chart_json" %}', function(data) {
+		                var ctx = $("#myChart").get(0).getContext("2d");
+		                new Chart(ctx).Line(data);
+		            });
+
+		            var showResult = function(){
+		            	console.log({{data.result}});
+		            	
+		            }
+		            $('#sparse_matrix_form button[type="submit"]').click(function(){
+		            	var input_file = $('#input_').val();
+		            	var form_data = {
+		            		'input_': input_file,
+		            	}
+			            $.post('result/', form_data,
+			            	function(data){
+			            		iterative_result = data['iterative_time'];			      
+			            		recursive_result = data['recursive_time'];
+			            		number = data['number'];
+
+			            		$('#iterative_result_paragraph').text("Time for Iterative approach " + iterative_result);
+			            		$('#recursive_result_paragraph').text("Time for Recursive approach " + recursive_result);
+			            		$('#fibo_number').text("Fibonacci Number is " + number);
+
+			            	});	
+		            });
+		            
+		        </script>
+	        </div>
+	    </div>
+	</div>
+</body>
+</html>

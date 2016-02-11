@@ -17,6 +17,9 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 urlpatterns = [
+    url(r'^sparse_matrix/', include('sparse_matrix.urls')),
+    url(r'^fibonacci/', include('fibonacci.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'', include('cryptapp.urls')),
+
 ]
