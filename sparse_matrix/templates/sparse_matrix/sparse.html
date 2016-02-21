@@ -142,7 +142,7 @@
 		            	var form_data = {
 		            		'input_': input_file,
 		            	}
-			            $.post('{% url "result" %}', form_data,
+			            $.post('/result/', form_data,
 			            	function(data){
 			            		result = data['result'];
 			            		$('#result_paragraph').text("The result is: " + result);
