@@ -1,4 +1,4 @@
-
+1
 {% load staticfiles %}
 
 <!DOCTYPE html>
@@ -60,19 +60,19 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand topnav" href="#">Home</a>
+                <a class="navbar-brand topnav" href="/#">Home</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="#about">About</a>
+                        <a href="/#about">About</a>
                     </li>
                     <li>
-                        <a href="#services">Description</a>
+                        <a href="/#services">Description</a>
                     </li>
                     <li>
-                        <a href="#contact">Contact-us</a>
+                        <a href="/#contact">Contact-us</a>
                     </li>
                 </ul>
             </div>
@@ -147,7 +147,7 @@
 			            	function(data){
 			            		iterative_result = data['iterative_time'];			      
 			            		recursive_result = data['recursive_time'];
-			            		number = data['number'];
+			            		number = data['fibonacci_no'];
 
 			            		$('#iterative_result_paragraph').text("Time for Iterative approach " + iterative_result);
 			            		$('#recursive_result_paragraph').text("Time for Recursive approach " + recursive_result);

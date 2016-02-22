@@ -30,16 +30,20 @@ def result(request):
     if not status:
         return HttpResponseBadRequest(json.dumps({"Message":"Unauthorized request"}),content_type='application/json')
     data = {'result': ''}
+    save_in_db = {}
     if request.method=='POST':
         file_ = str(request.FILES.get('input_', None))
         import time
         start_time = time.time()
-        length_matrix = CSM(file_)
+        length_matrix = len(CSM(file_))
         encrypt_CSM(file_)
         decrypt_CSM(encrypt_CSM(file_))
         sparseMatrix(decrypt_CSM(encrypt_CSM(file_)))
         data['result'] = str(time.time() - start_time)
-        #import pdb; pdb.set_trace()
+        save_in_db['processing_time'] = data['result']
+        save_in_db['length'] = length_matrix
+        newSparse = Sparse(**save_in_db)
+        newSparse.save()
         response.write("%s"%(json.dumps(data)))
     return response
 
@@ -71,4 +75,4 @@ class LineChartJSONView(BaseLineChartView):
         return [all_processing_time]
 
     line_chart = TemplateView.as_view(template_name='sparse.html')
-# line_chart_json = LineChartJSONView.as_view()
+line_chart_json = LineChartJSONView.as_view()

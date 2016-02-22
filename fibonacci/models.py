@@ -7,4 +7,4 @@ class Fibonacci(models.Model):
 	fibonacci_no = models.IntegerField()
 	recursive_time = models.FloatField()
 	iterative_time = models.FloatField()
-	cpu_time = models.FloatField()
+	cpu_time = models.FloatField(default=0)
