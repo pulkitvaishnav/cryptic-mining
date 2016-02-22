@@ -24,7 +24,7 @@
     <link href="{% static 'font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
     <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
     <style type="text/css">
-    	.jumbotron {
+/*    	.jumbotron {
 			background: #358CCE;
 			color: #FFF;
 			border-radius: 0px;
@@ -37,7 +37,7 @@
 			.h1 small {
 			font-size: 24px;
 		}
-    </style>
+*/    </style>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -72,7 +72,7 @@
                         <a href="#services">Description</a>
                     </li>
                     <li>
-                        <a href="#contact">Contact-us</a>
+                        <a href="#contact">Contact</a>
                     </li>
                 </ul>
             </div>
@@ -81,46 +81,36 @@
         <!-- /.container -->
     </nav><br><br>
 
-    <div class="jumbotron jumbotron-sm">
-	    <div class="container">
-	        <div class="row">
-	            <div class="col-sm-12 col-lg-12">
-	                <h1 class="h1">
-	                    Sparse Matrix <small> Evaluation on inreasing key size</small></h1>
-	            </div>
-	        </div>
-	    </div>
-	</div>
-	<div class="container">
-	    <div class="row">
-	        <div class="col-md-6">
-	        	<form id="sparse_matrix_form" class="form ajax" method="post" enctype="multipart/form-data">
-	           		{% csrf_token %}
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="name"><h5>
-                                    Upload a file which have sparse matrix</h5></label>
-                                <input type="file" name="input_" id="input_"/>
-                            </div>
-						    <div class="col-md-4">
-	                            <button type="submit" class="btn btn-primary pull-right" id="btnContactUs" onclick="showResult()">
-	                                Submit
-	                            </button>
-	                        </div>
+    <div class="container">
+    	<h1>Sparse Matrix<span class="small"> Evaluation on inreasing key size</span></h1>
+    	<hr class="intro-divider pull-left">
+    </div>
 
-                    	</div>
+    <div class="container">
+    	<div class="row">
+    		<div class="col-md-6 col-sm-6 col-lg-6">	
+    			<!--form div-->
+    			<form id="sparse_matrix_form" class="form ajax" method="post" enctype="multipart/form-data">
+       				{% csrf_token %}
+                    <div class="form-group">
+                        <label for="name">
+                            <h3>Upload a file with Sparse Matrix</h3>
+                        </label>
+                        <input type="file" name="input_" id="input_"/>
+                    </div>
+                    <button type="submit" class="btn btn-primary pull-left" id="btnContactUs" onclick="showResult()">
+                        Submit
+                    </button>
                 </form>
-                <div class="col-md-6">
-                	<p id="result_paragraph" >
-                	</p>
-                </div>
-	        </div>
-	    	<div class="col-md-6">
-	            <!-- <div class="well well-sm">
 
-	            </div> -->
-		        <h1>Some Line Charts loaded in Ajax!</h1>
+                <!--result div-->
+	            <div>
+	                <p id="result_paragraph" >
+	                </p>
+	            </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-lg-6">
+            	<h3>Some Line Charts loaded in Ajax!</h3>
 
 		        <canvas id="myChart" width="500" height="400"></canvas>
 
@@ -148,10 +138,41 @@
 			            		$('#result_paragraph').text("The result is: " + result);
 			            	});	
 		            });
-		            
 		        </script>
-	        </div>
-	    </div>
-	</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <ul class="list-inline">
+                        <li>
+                            <a href="#">Home</a>
+                        </li>
+                        <li class="footer-menu-divider">&sdot;</li>
+                        <li>
+                            <a href="#about">About</a>
+                        </li>
+                        <li class="footer-menu-divider">&sdot;</li>
+                        <li>
+                            <a href="#services">Services</a>
+                        </li>
+                        <li class="footer-menu-divider">&sdot;</li>
+                        <li>
+                            <a href="#contact">Contact</a>
+                        </li>
+                    </ul>
+                    <p class="copyright text-muted small">Copyright &copy; Your Company 2014. All Rights Reserved</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
 </body>
 </html>
