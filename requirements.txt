@@ -1,5 +1,4 @@
 ecdsa==0.13
-Fabric==1.10.2
 Flask==0.10.1
 flask-mongoengine==0.7.1
 Flask-WTF==0.12
