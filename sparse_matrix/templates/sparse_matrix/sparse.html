@@ -88,8 +88,12 @@
                 <br>
                 <!--result div-->
 	            <div>
-	                <p id="result_paragraph" >
+	                <p id="result_paragraph1" >
 	                </p>
+                    <p id="result_paragraph2" >
+                    </p>
+                    <p id="result_paragraph3" >
+                    </p>
 	            </div>
             </div>
             <div class="col-md-6 col-sm-6 col-lg-6">
@@ -117,8 +121,12 @@
 		            	}
 			            $.post('/result/', form_data,
 			            	function(data){
-			            		result = data['result'];
-			            		$('#result_paragraph').text("The result is: " + result);
+			            		result_cubic = data['result_cubic'];
+                                result_linear = data['result_linear']
+                                result_quadratic = data['result_quadratic']
+			            		$('#result_paragraph1').text("The result of linear encryption is: " + result_linear);
+                                $('#result_paragraph2').text("The result of quadratic encryption is: " + result_quadratic);
+                                $('#result_paragraph3').text("The result of cubic encryption is: " + result_cubic);
 			            	});	
 		            });
 		        </script>

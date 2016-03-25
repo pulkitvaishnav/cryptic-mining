@@ -26,7 +26,7 @@ SECRET_KEY = 'tmonh2u-ey24xrt8pxf)lc3x5pt(3dzxi)0cj*m712qd!db+#i'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+BROKER_URL = "amqp://hashgrowth:hashadmin@localhost:5672/hashhost"
 
 # Application definition
 
@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'sparse_matrix',
     'fibonacci',
     'chartjs',
+    'djcelery',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -102,6 +103,12 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
+CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
 
 
 # Static files (CSS, JavaScript, Images)

@@ -34,13 +34,26 @@ def result(request):
     if request.method=='POST':
         file_ = str(request.FILES.get('input_', None))
         import time
-        start_time = time.time()
         length_matrix = len(CSM(file_))
-        encrypt_CSM(file_)
-        decrypt_CSM(encrypt_CSM(file_))
-        sparseMatrix(decrypt_CSM(encrypt_CSM(file_)))
-        data['result'] = str(time.time() - start_time)
-        save_in_db['processing_time'] = data['result']
+        
+        start_time1 = time.time()
+        encrypt_CSM_linear(file_)
+        decrypt_CSM_linear(encrypt_CSM_linear(file_))
+        data['result_linear'] = str(time.time() - start_time1)
+
+        start_time2 = time.time()
+        encrypt_CSM_quadratic(file_)
+        decrypt_CSM_quadratic(encrypt_CSM_quadratic(file_))
+        data['result_quadratic'] = str(time.time() - start_time2)
+        
+        start_time3 = time.time()
+        encrypt_CSM_cubic(file_)
+        decrypt_CSM_cubic(encrypt_CSM_cubic(file_))
+        data['result_cubic'] = str(time.time() - start_time3)
+
+        save_in_db['processing_time_l'] = data['result_linear']
+        save_in_db['processing_time_q'] = data['result_quadratic']
+        save_in_db['processing_time_c'] = data['result_cubic']
         save_in_db['length'] = length_matrix
         newSparse = Sparse(**save_in_db)
         newSparse.save()
@@ -67,7 +80,7 @@ class LineChartJSONView(BaseLineChartView):
     def get_data(self):
         """Return 3 datasets to plot."""
         latest_time_list = Sparse.objects.values(
-            'processing_time').order_by('-id')[:5]
+            'processing_time_l').order_by('-id')[:5]
         all_processing_time = [p1['processing_time']
                                for p1 in latest_time_list]
         # import pdb; pdb.set_trace()
