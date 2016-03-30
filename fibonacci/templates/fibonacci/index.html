@@ -29,6 +29,27 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style type="text/css">
+        .matrix {
+            position: relative;
+        }
+        .matrix:before, .matrix:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            border: 1px solid #000;
+            width: 6px;
+            height: 100%;
+        }
+        .matrix:before {
+            left: -6px;
+            border-right: 0;
+        }
+        .matrix:after {
+            right: -6px;
+            border-left: 0;
+        }
+    </style>
 
 </head>
 
@@ -91,23 +112,43 @@
                 <br>
                 <!--result div-->
 	            <div>
-	                <p id="fibo_number"></p>
+	                <br><p id="fibo_number"></p><br>
                 	<p id="iterative_result_paragraph" ></p>
                 	<p id="recursive_result_paragraph"></p><br>
+                    <p class="#fibo_text"></p>
+                    <table class="matrix">
+                        <tr>
+                            <td class="fibo_numbern__1"></td>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <td class="fibo_numbern"></td>
+                        </tr>
+                        <tr>
+                            <td class="fibo_numbern"></td>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <td class="fibo_numbern_1"></td>
+                        </tr>
+                    </table>
+                    <p class="#fibo_inverse"></p><br>
+                    <table class="matrix">
+                        <tr>
+                            <td class="fibo_number_inverse_1"></td>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <td class="fibo_number_inverse"></td>
+
+                        </tr>
+                        <tr>
+                            <td class="fibo_number_inverse"></td>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <td class="fibo_number_inverse__1"></td>
+                        </tr>
+                    </table>
 	            </div>
             </div>
             <div class="col-md-6 col-sm-6 col-lg-6">
             	<h3>Size-Time Graph for Fibonacci Element</h3>
 
-		        <canvas id="myChart" width="500" height="400"></canvas>
+		        <!-- <canvas id="myChart" width="500" height="400"></canvas> -->
 		        <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
 		        <script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
 		        <script type="text/javascript" src="{% static 'js/eldarion-ajax.min.js' %}"></script>
 		        <script type="text/javascript">
-		            $.get('{% url "line_chart_json" %}', function(data) {
-		                var ctx = $("#myChart").get(0).getContext("2d");
-		                new Chart(ctx).Line(data);
-		            });
+		           
 
 		            var showResult = function(){
 		            	console.log({{data.result}});
@@ -127,6 +168,18 @@
 			            		$('#iterative_result_paragraph').text("Time for Iterative approach " + iterative_result);
 			            		$('#recursive_result_paragraph').text("Time for Recursive approach " + recursive_result);
 			            		$('#fibo_number').text("Fibonacci Number is " + number);
+                                if(number!=0){
+                                    $('#fibo_text').text("Fibonacci matrix = ");
+                                    $('#fibo_inverse').text("Fibonacci inverse matrix = ");
+                                }
+                                $('.fibo_numbern').text(number);
+                                $('.fibo_numbern_1').text(number-1);
+                                $('.fibo_numbern__1').text(number+1);
+
+                                $('.fibo_number_inverse__1').text((number+1)/(((number-1)*(number+1))-(number*number)));
+                                $('.fibo_number_inverse').text(-number/(((number-1)*(number+1))-(number*number)));
+                                $('.fibo_number_inverse_1').text((number-1)/(((number-1)*(number+1))-(number*number)));
+
 
 			            	});	
 		            });

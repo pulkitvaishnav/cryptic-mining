@@ -99,16 +99,13 @@
             <div class="col-md-6 col-sm-6 col-lg-6">
             	<h3>Size-Time Graph for Sparse Matrix</h3>
 
-		        <canvas id="myChart" width="500" height="400"></canvas>
+		        <!-- <canvas id="myChart" width="500" height="400"></canvas> -->
 
 		        <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
 		        <script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
 		        <script type="text/javascript" src="{% static 'js/eldarion-ajax.min.js' %}"></script>
 		        <script type="text/javascript">
-		            $.get('{% url "line_chart_json" %}', function(data) {
-		                var ctx = $("#myChart").get(0).getContext("2d");
-		                new Chart(ctx).Line(data);
-		            });
+		           
 
 		            var showResult = function(){
 		            	console.log({{data.result}});
@@ -116,6 +113,27 @@
 		            }
 		            $('#sparse_matrix_form button[type="submit"]').click(function(){
 		            	var input_file = $('#input_').val();
+                        function readMultipleFiles(evt) {
+                        //Retrieve all the files from the FileList object
+                        var files = evt.target.files;
+
+                            if (files) {
+                                for (var i = 0, f; f = files[i]; i++) {
+                                    var r = new FileReader();
+                                    r.onload = (function (f) {
+                                        return function (e) {
+                                            var contents = e.target.result;
+                                            alert(contents);
+                                        };
+                                    })(f);
+                                    r.readAsText(f);
+                                }
+                            } else {
+                                alert("Failed to load files");
+                            }
+                        }
+                    document.getElementById('input_').addEventListener('change', readMultipleFiles, false);
+
 		            	var form_data = {
 		            		'input_': input_file,
 		            	}

@@ -4,7 +4,7 @@ from django.shortcuts import render, render_to_response
 from django.views.decorators.csrf import csrf_exempt
 from random import randint
 from django.views.generic import TemplateView
-from chartjs.views.lines import BaseLineChartView
+# from chartjs.views.lines import BaseLineChartView
 import json
 
 from .models import Fibonacci
@@ -30,24 +30,29 @@ def result(request):
 		data['recursive_time'] = time.time() - start_time_recursive
 		data['fibonacci_no'] = number
 		newFibo = Fibonacci(**data)
-		newFibo.save()
+		latest_fibonacci = Fibonacci.objects.values('fibonacci_no')
+		all_fibonacci = [p['fibonacci_no'] for p in latest_fibonacci]
+		if number in all_fibonacci:
+			pass
+		else:
+			newFibo.save()
 		#import pdb; pdb.set_trace()
 		response.write("%s"%(json.dumps(data)))
 	return response	
 
-class LineChartJSONView(BaseLineChartView):
-	def get_labels(self):
-		"""Return 7 labels."""
-		latest_fibonacci = Fibonacci.objects.values('fibonacci_no').order_by('fibonacci_no')[:5]
-		all_fibonacci = [len(str(p['fibonacci_no'])) for p in latest_fibonacci]
-		return all_fibonacci
-	def get_data(self):
-		"""Return 3 datasets to plot."""
-		latest_iterative_list = Fibonacci.objects.values(
-			'iterative_time').order_by('-id')[:5]
-		latest_recursive_list = Fibonacci.objects.values(
-			'recursive_time').order_by('-id')[:5]
-		i_time = [p1['iterative_time'] for p1 in latest_iterative_list]
-		r_time = [p2['recursive_time'] for p2 in latest_recursive_list]
-		return [i_time]
-	line_chart = TemplateView.as_view(template_name='index.html')
+# class LineChartJSONView(BaseLineChartView):
+# 	def get_labels(self):
+# 		"""Return 7 labels."""
+# 		latest_fibonacci = Fibonacci.objects.values('fibonacci_no').order_by('fibonacci_no')[:5]
+# 		all_fibonacci = [len(str(p['fibonacci_no'])) for p in latest_fibonacci]
+# 		return all_fibonacci
+# 	def get_data(self):
+# 		"""Return 3 datasets to plot."""
+# 		latest_iterative_list = Fibonacci.objects.values(
+# 			'iterative_time').order_by('-id')[:5]
+# 		latest_recursive_list = Fibonacci.objects.values(
+# 			'recursive_time').order_by('-id')[:5]
+# 		i_time = [p1['iterative_time'] for p1 in latest_iterative_list]
+# 		r_time = [p2['recursive_time'] for p2 in latest_recursive_list]
+# 		return [i_time]
+# 	line_chart = TemplateView.as_view(template_name='index.html')
