@@ -85,6 +85,7 @@
                     </div>
                 </form>
                 <br>
+                <pre id="test" style="display: none"></pre>
                 <br>
                 <!--result div-->
 	            <div>
@@ -104,6 +105,7 @@
 		        <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
 		        <script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
 		        <script type="text/javascript" src="{% static 'js/eldarion-ajax.min.js' %}"></script>
+                
 		        <script type="text/javascript">
 		           
 
@@ -111,30 +113,40 @@
 		            	console.log({{data.result}});
 		            	
 		            }
-		            $('#sparse_matrix_form button[type="submit"]').click(function(){
-		            	var input_file = $('#input_').val();
-                        function readMultipleFiles(evt) {
-                        //Retrieve all the files from the FileList object
-                        var files = evt.target.files;
 
+
+
+
+                    function readMultipleFiles(evt) {
+                            console.log("test");
+                        //Retrieve all the files from the FileList object
+                        var files = evt.target.files[0];
+                        var contents = " ";
                             if (files) {
-                                for (var i = 0, f; f = files[i]; i++) {
                                     var r = new FileReader();
-                                    r.onload = (function (f) {
-                                        return function (e) {
-                                            var contents = e.target.result;
-                                            alert(contents);
-                                        };
-                                    })(f);
-                                    r.readAsText(f);
-                                }
+                                    r.onload = function () {
+                                            contents = r.result;
+                                            $('#test').text(contents);
+                                            // console.log(window.contents);
+                                        };                                    
+                                    var file_data = r.readAsText(files);
+                                    return r;
                             } else {
                                 alert("Failed to load files");
                             }
-                        }
-                    document.getElementById('input_').addEventListener('change', readMultipleFiles, false);
 
-		            	var form_data = {
+                            
+                        }
+                    document.getElementById('input_').addEventListener('change', readMultipleFiles);
+
+
+
+
+
+		            $('#sparse_matrix_form button[type="submit"]').click(function(){
+		            	var input_file = document.getElementById("test").innerHTML;
+                        console.log(input_file);
+                        var form_data = {
 		            		'input_': input_file,
 		            	}
 			            $.post('/result/', form_data,

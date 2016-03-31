@@ -31,13 +31,15 @@ def result(request):
         return HttpResponseBadRequest(json.dumps({"Message":"Unauthorized request"}),content_type='application/json')
     data = {'result': ''}
     save_in_db = {}
-    if request.method=='POST':
-        file_ = str(request.FILES.get('input_', None))
-        
+    # file_ = request.FILES.get('input_')
 
+    if request.method=='POST':
+        file_ = request.POST.get('input_', None)
+        
+        # import pdb; pdb.set_trace()
         import time
         length_matrix = len(CSM(file_))
-        # import pdb; pdb.set_trace()
+
         start_time1 = time.time()
         encrypt_CSM_linear(file_)
         decrypt_CSM_linear(encrypt_CSM_linear(file_))
@@ -58,7 +60,12 @@ def result(request):
         save_in_db['processing_time_c'] = data['result_cubic']
         save_in_db['length'] = length_matrix
         newSparse = Sparse(**save_in_db)
-        newSparse.save()
+        length_in_sparse = Sparse.objects.values('length')
+        all_lengths = [p['length'] for p in length_in_sparse]
+        if length_matrix in all_lengths:
+            pass
+        else:
+            newSparse.save()
         response.write("%s"%(json.dumps(data)))
     return response
 
