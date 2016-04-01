@@ -98,16 +98,19 @@
 	            </div>
             </div>
             <div class="col-md-6 col-sm-6 col-lg-6">
-            	<h3>Size-Time Graph for Sparse Matrix</h3>
+            	<h3>Linear, Quadratic, Cubic Graph for Sparse Matrix Encryption</h3>
 
-		        <!-- <canvas id="myChart" width="500" height="400"></canvas> -->
+		        <canvas id="myChart" width="500" height="400"></canvas>
 
 		        <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
 		        <script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
 		        <script type="text/javascript" src="{% static 'js/eldarion-ajax.min.js' %}"></script>
                 
 		        <script type="text/javascript">
-		           
+		            $.get('{% url "line_chart_json" %}', function(data) {
+                        var ctx = $("#myChart").get(0).getContext("2d");
+                        new Chart(ctx).Line(data);
+                    });
 
 		            var showResult = function(){
 		            	console.log({{data.result}});

@@ -105,7 +105,7 @@
                     </button>
                     
                     	</div>
-                    <br>
+                    <br><br>
                     </div>
                 </form>
                 <br>
@@ -116,6 +116,7 @@
                 	<p id="iterative_result_paragraph" ></p>
                 	<p id="recursive_result_paragraph"></p><br>
                     <p class="#fibo_text"></p>
+                    Fibonacci Matrix: 
                     <table class="matrix">
                         <tr>
                             <td class="fibo_numbern__1"></td>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -127,6 +128,7 @@
                         </tr>
                     </table>
                     <p class="#fibo_inverse"></p><br>
+                    Fibonacci Inverse Matrix: 
                     <table class="matrix">
                         <tr>
                             <td class="fibo_number_inverse_1"></td>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -141,15 +143,14 @@
 	            </div>
             </div>
             <div class="col-md-6 col-sm-6 col-lg-6">
-            	<h3>Size-Time Graph for Fibonacci Element</h3>
+            	<!-- <h3>Size-Time Graph for Fibonacci Element</h3> -->
 
 		        <!-- <canvas id="myChart" width="500" height="400"></canvas> -->
 		        <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
 		        <script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
 		        <script type="text/javascript" src="{% static 'js/eldarion-ajax.min.js' %}"></script>
 		        <script type="text/javascript">
-		           
-
+		      
 		            var showResult = function(){
 		            	console.log({{data.result}});
 		            	
@@ -165,9 +166,9 @@
 			            		recursive_result = data['recursive_time'];
 			            		number = data['fibonacci_no'];
 
-			            		$('#iterative_result_paragraph').text("Time for Iterative approach " + iterative_result);
+			            		$('#iterative_result_paragraph').text("Time for Iterative approach    " + iterative_result);
 			            		$('#recursive_result_paragraph').text("Time for Recursive approach " + recursive_result);
-			            		$('#fibo_number').text("Fibonacci Number is " + number);
+			            		$('#fibo_number').text("Fibonacci Number is    " + number);
                                 if(number!=0){
                                     $('#fibo_text').text("Fibonacci matrix = ");
                                     $('#fibo_inverse').text("Fibonacci inverse matrix = ");
