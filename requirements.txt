@@ -2,7 +2,9 @@ amqp==1.4.9
 anyjson==0.3.3
 billiard==3.3.0.23
 celery==3.1.23
+chartjs==1.2
 Django==1.9
+django-celery==3.1.17
 django-chartjs==1.0
 ecdsa==0.13
 Fabric==1.10.2
