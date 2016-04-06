@@ -95,11 +95,14 @@
     			<form id="fibonacci_number_form" class="form ajax" method="post" enctype="multipart/form-data">
        				{% csrf_token %}
                     <div class="form-group">
-                        <label for="name">
-                            <h3>Enter the fibonacci element's position</h3>
-                        </label>
+                        
                         <div class="col-md-5">
-                        	<input class="form-control" type="input" name="input_" id="input_" placeholder="eg: 23" /><br>
+                        	<label for="name">
+                                Enter the fibonacci element's position(Key)
+                            </label>
+                            <input class="form-control" type="input" name="input_" id="input_" placeholder="eg: 23" /><br>
+                            <label>Enter Plan text:</label>
+                            <input class="form-control" type="input" name="input_plain" id="input_plain" placeholder="eg: This is Crypta-Analysis" /><br>
                         	<button type="submit" class="btn btn-primary pull-left" id="btnContactUs" onclick="showResult()">
                         Submit
                     </button>
@@ -157,8 +160,10 @@
 		            }
 		            $('#fibonacci_number_form button[type="submit"]').click(function(){
 		            	var input_file = $('#input_').val();
+                        var input_plain_text = $('#input_plain').val();
 		            	var form_data = {
 		            		'input_': input_file,
+                            'input_plain': input_plain_text,
 		            	}
 			            $.post('result/', form_data,
 			            	function(data){

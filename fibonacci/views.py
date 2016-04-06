@@ -6,7 +6,8 @@ from random import randint
 from django.views.generic import TemplateView
 # from chartjs.views.lines import BaseLineChartView
 import json
-
+from sympy import *
+import numpy as np
 from .models import Fibonacci
 from fibonacci.utils import *
 
@@ -22,6 +23,8 @@ def result(request):
     data = {'iterative_time': '', 'recursive_time': '', 'fibonacci_no': ''}
     if request.method == 'POST':
         fibo_number = request.POST.get('input_', None)
+        plain_text = request.POST.get('input_plain', None)
+        # import pdb; pdb.set_trace()
         import time
         start_time_iterative = time.time()
         number = iterative_fibo(fibo_number)
@@ -31,6 +34,20 @@ def result(request):
         data['iterative_time'] = end_iterative - start_time_iterative
         data['recursive_time'] = time.time() - start_time_recursive
         data['fibonacci_no'] = number
+        fibo_matrix = Matrix([[number + 1, number], [number, number - 1]])
+        fibo_inverse = fibo_matrix**-1
+        plain_text = list(plain_text)
+        plain_text_matrix = []
+        for elements in plain_text:
+            plain_text_matrix.append(ord(elements))
+        if len(plain_text_matrix) % 2:
+            plain_text_matrix.append(32)
+        plain_text_matrix = Matrix(np.reshape(
+            plain_text_matrix, (len(plain_text_matrix) / 2, 2)))
+        encrypted_matrix = plain_text_matrix * fibo_matrix
+        import pdb
+        pdb.set_trace()
+
         newFibo = Fibonacci(**data)
         latest_fibonacci = Fibonacci.objects.values('fibonacci_no')
         all_fibonacci = [p['fibonacci_no'] for p in latest_fibonacci]
