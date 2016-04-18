@@ -65,16 +65,16 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand topnav" href="#">Home</a>
+                <a class="navbar-brand topnav" href="/">Home</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="#description">Description</a>
+                        <a href="/#description">Description</a>
                     </li>
                     <li>
-                        <a href="#contact">Contact</a>
+                        <a href="/#contact">Contact</a>
                     </li>
                 </ul>
             </div>
@@ -100,9 +100,9 @@
                         	<label for="name">
                                 Enter the fibonacci element's position(Key)
                             </label>
-                            <input class="form-control" type="input" name="input_" id="input_" placeholder="eg: 23" /><br>
+                            <input class="form-control" type="input" name="input_" id="input_" placeholder="eg: 23" required="true" /><br>
                             <label>Enter Plan text:</label>
-                            <input class="form-control" type="input" name="input_plain" id="input_plain" placeholder="eg: This is Crypta-Analysis" /><br>
+                            <input class="form-control" type="input" name="input_plain" id="input_plain" placeholder="eg: This is Crypta-Analysis" required="true" /><br>
                         	<button type="submit" class="btn btn-primary pull-left" id="btnContactUs" onclick="showResult()">
                         Submit
                     </button>
@@ -113,85 +113,55 @@
                 </form>
                 <br>
                 <br>
-                <!--result div-->
-	            <div>
-	                <br><p id="fibo_number"></p><br>
-                	<p id="iterative_result_paragraph" ></p>
-                	<p id="recursive_result_paragraph"></p><br>
-                    <p class="#fibo_text"></p>
-                    Fibonacci Matrix: 
-                    <table class="matrix">
-                        <tr>
-                            <td class="fibo_numbern__1"></td>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <td class="fibo_numbern"></td>
-                        </tr>
-                        <tr>
-                            <td class="fibo_numbern"></td>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <td class="fibo_numbern_1"></td>
-                        </tr>
-                    </table>
-                    <p class="#fibo_inverse"></p><br>
-                    Fibonacci Inverse Matrix: 
-                    <table class="matrix">
-                        <tr>
-                            <td class="fibo_number_inverse_1"></td>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <td class="fibo_number_inverse"></td>
-
-                        </tr>
-                        <tr>
-                            <td class="fibo_number_inverse"></td>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <td class="fibo_number_inverse__1"></td>
-                        </tr>
-                    </table>
-	            </div>
             </div>
             <div class="col-md-6 col-sm-6 col-lg-6">
-            	<!-- <h3>Size-Time Graph for Fibonacci Element</h3> -->
-
-		        <!-- <canvas id="myChart" width="500" height="400"></canvas> -->
-		        <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
-		        <script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
-		        <script type="text/javascript" src="{% static 'js/eldarion-ajax.min.js' %}"></script>
-		        <script type="text/javascript">
-		      
-		            var showResult = function(){
-		            	console.log({{data.result}});
-		            	
-		            }
-		            $('#fibonacci_number_form button[type="submit"]').click(function(){
-		            	var input_file = $('#input_').val();
-                        var input_plain_text = $('#input_plain').val();
-		            	var form_data = {
-		            		'input_': input_file,
-                            'input_plain': input_plain_text,
-		            	}
-			            $.post('result/', form_data,
-			            	function(data){
-			            		iterative_result = data['iterative_time'];			      
-			            		recursive_result = data['recursive_time'];
-			            		number = data['fibonacci_no'];
-
-			            		$('#iterative_result_paragraph').text("Time for Iterative approach    " + iterative_result);
-			            		$('#recursive_result_paragraph').text("Time for Recursive approach " + recursive_result);
-			            		$('#fibo_number').text("Fibonacci Number is    " + number);
-                                if(number!=0){
-                                    $('#fibo_text').text("Fibonacci matrix = ");
-                                    $('#fibo_inverse').text("Fibonacci inverse matrix = ");
-                                }
-                                $('.fibo_numbern').text(number);
-                                $('.fibo_numbern_1').text(number-1);
-                                $('.fibo_numbern__1').text(number+1);
-
-                                $('.fibo_number_inverse__1').text((number+1)/(((number-1)*(number+1))-(number*number)));
-                                $('.fibo_number_inverse').text(-number/(((number-1)*(number+1))-(number*number)));
-                                $('.fibo_number_inverse_1').text((number-1)/(((number-1)*(number+1))-(number*number)));
-
-
-			            	});	
-		            });
-		            
-		        </script>
+        	    <p id="fibo_number"></p><br>
+                <p id="iterative_result_paragraph" ></p><br>
+                <p id="recursive_result_paragraph"></p><br>
+                <p id="plain_text_matrix"></p><br>
+                <p id="fibo_matrix"></p><br>
+                <p id="encrypted_data"></p><br>
+                <p id="decrypted_matrix"></p>
+                <p class="#fibo_text"></p>
             </div>
+            <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+	        <script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
+	        <script type="text/javascript" src="{% static 'js/eldarion-ajax.min.js' %}"></script>
+	        <script type="text/javascript">
+	      
+	            var showResult = function(){
+	            	console.log({{data.result}});
+	            	
+	            }
+	            $('#fibonacci_number_form button[type="submit"]').click(function(){
+	            	var input_file = $('#input_').val();
+                    var input_plain_text = $('#input_plain').val();
+	            	var form_data = {
+	            		'input_': input_file,
+                        'input_plain': input_plain_text,
+	            	}
+		            $.post('result/', form_data,
+		            	function(data){
+		            		iterative_result = data['iterative_time'];			      
+		            		recursive_result = data['recursive_time'];
+		            		number = data['fibonacci_no'];
+                            encryted_text = data['encrypted_matrix']
+                            plain_text_matrix = data['plain_text_matrix']
+                            decrypted_matrix = data['decrypted_matrix']
+                            fibo_matrix = data['fibo_matrix']
+                            fibo_inverse = data['fibo_inverse']
+
+		            		$('#fibo_number').text("Fibonacci Number is:    " + number);
+                            $('#iterative_result_paragraph').text("Time for Iterative approach:    " + iterative_result);
+		            		$('#recursive_result_paragraph').text("Time for Recursive approach:    " + recursive_result);
+		            		$('#fibo_matrix').text("Fibonacci Matrix is(Key):    " + fibo_matrix);
+                            $('#plain_text_matrix').text("Fibonacci plain text matrix is(Plain Text):    " + plain_text_matrix);
+                            $('#encrypted_data').text("Encrypted data   =   (Fibonacci Matrix) * (Plain text Matrix):    " + encryted_text);
+                            $('#decrypted_matrix').text("Fibonacci decrypted_matrix = (Encrypted matrix) * (Inverse Fibonacci): " + decrypted_matrix);
+		            	});	
+	            });
+	            
+	        </script>
         </div>
     </div>
 
@@ -202,15 +172,15 @@
                 <div class="col-lg-12">
                     <ul class="list-inline">
                         <li>
-                            <a href="#">Home</a>
+                            <a href="/">Home</a>
                         </li>
                         <li class="footer-menu-divider">&sdot;</li>
                         <li>
-                            <a href="#services">Services</a>
+                            <a href="/#services">Services</a>
                         </li>
                         <li class="footer-menu-divider">&sdot;</li>
                         <li>
-                            <a href="#contact">Contact</a>
+                            <a href="/#contact">Contact</a>
                         </li>
                     </ul>
                     <p class="copyright text-muted small">Copyright &copy; Your Company 2014. All Rights Reserved</p>

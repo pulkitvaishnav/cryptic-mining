@@ -44,10 +44,10 @@ def result(request):
             plain_text_matrix.append(32)
         plain_text_matrix = Matrix(np.reshape(
             plain_text_matrix, (len(plain_text_matrix) / 2, 2)))
+        
         encrypted_matrix = plain_text_matrix * fibo_matrix
-        import pdb
-        pdb.set_trace()
-
+        decrytped_matrix = encrypted_matrix * fibo_inverse
+        
         newFibo = Fibonacci(**data)
         latest_fibonacci = Fibonacci.objects.values('fibonacci_no')
         all_fibonacci = [p['fibonacci_no'] for p in latest_fibonacci]
@@ -55,7 +55,14 @@ def result(request):
             pass
         else:
             newFibo.save()
+
         #import pdb; pdb.set_trace()
+        encrypted_matrix = str(encrypted_matrix.tolist())
+        data['fibo_matrix'] = str(fibo_matrix)
+        data['fibo_inverse'] = str(fibo_inverse)
+        data['plain_text_matrix'] = str(plain_text_matrix)
+        data['decrypted_matrix'] = str(decrytped_matrix)
+        data['encrypted_matrix'] = json.dumps(encrypted_matrix)
         response.write("%s" % (json.dumps(data)))
     return response
 
